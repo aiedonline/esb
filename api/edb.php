@@ -1,6 +1,5 @@
 <?php
 
-
 require_once __DIR__  . '/json.php';
 
 class Database {
