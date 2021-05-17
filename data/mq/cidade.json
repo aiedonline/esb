@@ -1,0 +1,5 @@
+{
+    "name" : "cidade",
+    "tasks"   : ["raspagem", "persistencia"],
+    "scripts" : ["/cidade/wiki_lista_cidades.py"]
+}

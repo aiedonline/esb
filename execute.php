@@ -24,7 +24,7 @@ try {
     $r = new ReflectionClass('Driver' . $post_data["driver"]);
     $reflectionMethod = new ReflectionMethod('Driver' . $post_data["driver"], 'exec');
     $retorno = $reflectionMethod->invoke($r->newInstance(), $post_data);
-    echo json_encode(array("status" => false, "rows" => $retorno));
+    echo json_encode(array("status" => true, "rows" => $retorno));
 } catch (Exception $e) {
     error_log( 'Exceção capturada: ',  $e->getMessage(), 0);
     echo json_encode(array("status" => false, "rows" => $e->getMessage()));
