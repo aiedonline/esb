@@ -117,6 +117,7 @@ class Drivermq {
 				if($work != null) {
 					$task_index = array_search($post_data['task'], $work->tasks) + 1;
 					
+					$path_to_dir_all = dirname(dirname(dirname(__FILE__))) . "/tmp/mq/". $post_data['group'] . "/" . $post_data['work'] . "/no_task_all/";
 					$path_to_file 			= dirname(dirname(dirname(__FILE__))) . "/tmp/mq/". $post_data['group'] . "/" . $post_data['work'] . "/no_task_all/".  $post_data['fid'];
 					$path_to_new_directory 	= dirname(dirname(dirname(__FILE__))) . "/tmp/mq/". $post_data['group'] . "/" . $post_data['work'] . "/" . $work->tasks[$task_index] . "/";
 					$buffer = JsonV2::FromFile( $path_to_file );
@@ -128,10 +129,13 @@ class Drivermq {
 					if(!file_exists($path_to_new_directory)){
 						mkdir($path_to_new_directory, 0777, true);
 					}
-					if ( link(  $path_to_file, $path_to_new_directory . $post_data['fid'] ) == 0) {
-						return true;
-					} else {
-						throw new Exception('Não foi possível salver o trabalho no próximo task');
+
+					if( JsonV2::WriteFile($path_to_dir_all, $post_data['fid'], $buffer) == true) {
+						if ( link(  $path_to_dir_all . $post_data['fid'], $path_to_new_directory . $post_data['fid'] ) == 0) {
+							return true;
+						} else {
+							throw new Exception('Não foi possível salver o trabalho no próximo task');
+						}
 					}
 				} else {
 					// work nao encontrado...
@@ -141,6 +145,7 @@ class Drivermq {
 				$path_to_work = dirname(dirname(dirname(__FILE__))) . "/data/mq/" . $post_data['work'] . ".json";
 				$work = JsonV2::FromFile( $path_to_work );
 				if($work != null) {
+					$path_to_dir_all =        dirname(dirname(dirname(__FILE__))) . "/tmp/mq/". $post_data['group'] . "/" . $post_data['work'] . "/no_task_all/";
 					$path_to_file 			= dirname(dirname(dirname(__FILE__))) . "/tmp/mq/". $post_data['group'] . "/" . $post_data['work'] . "/" . $post_data['task'] . "/".  $post_data['fid'];
 					$path_to_new_directory 	= dirname(dirname(dirname(__FILE__))) . "/tmp/mq/". $post_data['group'] . "/" . $post_data['work'] . "/no_task_fail/" . $post_data['task'] . "/";
 					$buffer = JsonV2::FromFile( $path_to_file );
@@ -152,10 +157,12 @@ class Drivermq {
 					if(!file_exists($path_to_new_directory)){
 						mkdir($path_to_new_directory, 0777, true);
 					}
-					if ( link($path_to_file, $path_to_new_directory .  $post_data['fid'] ) == 0) {
-						return true;
-					} else {
-						throw new Exception('Não foi possível salver o trabalho no próximo task');
+					if( JsonV2::WriteFile($path_to_dir_all, $post_data['fid'], $buffer) == true) {
+						if ( link($path_to_dir_all . $post_data['fid'], $path_to_new_directory .  $post_data['fid'] ) == 0) {
+							return true;
+						} else {
+							throw new Exception('Não foi possível salver o trabalho no próximo task');
+						}
 					}
 				} else {
 					// work nao encontrado...
