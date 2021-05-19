@@ -1,5 +1,6 @@
 {
     "name" : "cidade",
-    "tasks"   : ["raspagem", "persistencia"],
-    "scripts" : ["/cidade/wiki_lista_cidades.py"]
+    "tasks"   : ["raspagem",                      "transformar",                 "persistencia"],
+    "scripts" : ["/cidade/wiki_cidade_raspar.py", "/cidade/wiki_transformar.py"],
+    "error"   : ["/cidade/wiki_cidade_raspar_fail.py","/cidade/wiki_transformar_fail.py", null]
 }

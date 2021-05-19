@@ -1,0 +1,6 @@
+{
+    "name" : "estado",
+    "tasks"   : ["raspagem",                      "transformar"                 ],
+    "scripts" : ["/estado/wiki_estado_raspar.py", "/estado/wiki_transformar.py"],
+    "error"   : ["/estado/wiki_estado_raspar_fail.py","/estado/wiki_transformar_fail.py", null]
+}
